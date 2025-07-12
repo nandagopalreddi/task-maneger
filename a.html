@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task Manager</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #f5f5f5;
+    }
+    .task-container {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+    .task {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding: 0.5rem;
+      background: white;
+      border-radius: 4px;
+    }
+    .task input[type="text"] {
+      font-size: 16px;
+      border: none;
+      background: transparent;
+      width: 60%;
+    }
+    .buttons button {
+      margin-left: 5px;
+      padding: 5px 10px;
+    }
+    .k{
+      background-color: greenyellow;
+      width: 15%;
+      height: 4vh;
+      border-style: groove;
+    }
+  </style>
+</head>
+<body>
+  <div class="task-container" style="text-align: center;">
+    <h2>WeMade Task Manager</h2>
+    <input type="text" id="taskInput" placeholder="Enter a new task">
+    <button class="k" onclick="addTask()">Add Task</button>
+    <div id="taskList"></div>
+  </div>
+  <script>
+    function addTask() {
+      const input = document.getElementById('taskInput');
+      const value = input.value.trim();
+      if (value === '') return;
+      const taskDiv = document.createElement('div');
+      taskDiv.className = 'task';
+      const taskText = document.createElement('input');
+      taskText.type = 'text';
+      taskText.value = value;
+      taskText.readOnly = true;
+      const buttonsDiv = document.createElement('div');
+      buttonsDiv.className = 'buttons';
+      const renameBtn = document.createElement('button');
+      renameBtn.textContent = 'Rename';
+      renameBtn.onclick = () => {
+        taskText.readOnly = !taskText.readOnly;
+        taskText.focus();
+        renameBtn.textContent = taskText.readOnly ? 'Rename' : 'Save';
+      };
+      const deleteBtn = document.createElement('button');
+      deleteBtn.textContent = 'Delete';
+      deleteBtn.onclick = () => taskDiv.remove();
+      buttonsDiv.appendChild(renameBtn);
+      buttonsDiv.appendChild(deleteBtn);
+      taskDiv.appendChild(taskText);
+      taskDiv.appendChild(buttonsDiv);
+      document.getElementById('taskList').appendChild(taskDiv);
+      input.value = '';
+    }
+  </script>
+</body>
+</html>
